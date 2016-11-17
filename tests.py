@@ -2,6 +2,8 @@ from components import Driver, Car
 from interfaces import IDriver, IAuto
 from zope.component import implementedBy
 
+# https://github.com/eugeneai/driver-demo
+
 # ZCA
 #
 # Интерфейс - Interface - структура, описывающая то, что можно делать с ФБ.
