@@ -21,15 +21,15 @@ class Driver(object):
         return "{} {}".format(self.name, self.familyname)
 
     def add_car(self, car):
-        assert IAuto.providedBy(car)
+        assert IVehicle.providedBy(car)
         self.cars.append(car)
 
     def remove_car(self, car):
-        assert IAuto.providedBy(car)
+        assert IVehicle.providedBy(car)
         self.cars.remove(car)
         
     def add_motobike(self, motobike):
-        assert IAuto.providedBy(cmotobike)
+        assert IVehicle.providedBy(motobike)
         self.motobikes.append(motobike)
 
     def remove_motobike(self, motobike):
