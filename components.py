@@ -1,4 +1,4 @@
-from interfaces import IDriver, IAuto
+from interfaces import IDriver, IVehicle
 from zope.interface import implementer
 from zope.component import providedBy
 
@@ -12,6 +12,7 @@ class Driver(object):
         self.name=name
         self.familyname=familyname
         self.cars=[]
+        self.motobikes=[]
 
     def fio(self):
         """
@@ -26,8 +27,16 @@ class Driver(object):
     def remove_car(self, car):
         assert IAuto.providedBy(car)
         self.cars.remove(car)
+        
+    def add_motobike(self, motobike):
+        assert IAuto.providedBy(cmotobike)
+        self.motobikes.append(motobike)
 
-@implementer(IAuto)
+    def remove_motobike(self, motobike):
+        assert IVehicle.providedBy(motobike)
+        self.motobikes.remove(motobike)
+
+@implementer(IVehicle)
 class Car(object):
     def __init__(self, name):
         self.name = name
@@ -42,5 +51,23 @@ class Car(object):
 
     def unregister(self):
         self.owner.remove_car(self)
+        self.owner=None
+        self.number=None
+        
+@implementer(IVehicle)        
+class Motobike(object):
+    def __init__(self, name):
+        self.name = name
+        self.owner = self.number = None
+
+    def register(self, owner, number):
+        if self.owner is not None:
+            raise ValueError("has owner")
+        self.owner = owner
+        self.number = number
+        owner.add_motobike(self)
+
+    def unregister(self):
+        self.owner.remove_motobike(self)
         self.owner=None
         self.number=None

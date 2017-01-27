@@ -1,5 +1,5 @@
-from components import Driver, Car
-from interfaces import IDriver, IAuto
+from components import Driver, Car, Motobike
+from interfaces import IDriver, IVehicle
 from zope.component import implementedBy
 
 # https://github.com/eugeneai/driver-demo
@@ -26,7 +26,14 @@ class Test_Car:
         self.car=Car("Traban")
 
     def test_car(self):
-        IAuto.providedBy(self.car)
+        IVehicle.providedBy(self.car)
+        
+class Test_Motobike:
+    def setUp(self):
+        self.motobike=Motobike("Honda R1")
+
+    def test_car(self):
+        IVehicle.providedBy(self.motobike)
 
 
 class Test_driver:
@@ -61,3 +68,16 @@ class Test_driver:
         assert len(john.cars) == 0
         assert car1.owner == None
         assert car1.number == None
+        
+    def test_add_and_remove_motobike(self):
+        john = self.driver
+        moto = ("BMW 1000")
+        NUMBER = "x-666-xx-138-rus"
+        moto.register(john, NUMBER)
+        assert len(john.motobikes) == 1
+        assert moto.owner == john
+        assert moto.number == NUMBER
+        moto.unregister()
+        assert len(john.moto) == 0
+        assert moto.owner == None
+        assert moto.number == None
