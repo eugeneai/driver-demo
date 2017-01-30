@@ -1,7 +1,9 @@
 # encoding: utf-8
 from components import Driver, Car, Motobike
-from interfaces import IDriver, IVehicle
-from zope.component import implementedBy
+from interfaces import IDriver, IVehicle, IStorage
+from zope.component import implementedBy, getUtility
+import psycopg2
+import storage
 
 # https://github.com/eugeneai/driver-demo
 
@@ -82,3 +84,43 @@ class Test_driver:
         assert len(john.vechicles) == 0
         assert moto.owner == None
         assert moto.number == None
+
+CONN_STR="""
+    dbname=vechicle
+    user=postgres
+    password=vechicles
+    port=15432
+    host=172.16.19.20
+    """
+class Test_PostgreSQL_connection:
+    def setUp(self):
+        self.conn=psycopg2.connect(CONN_STR)
+
+    def tearDown(self):
+        self.conn.close()
+        del self.conn
+
+    def test_conn_print(self):
+        assert self.conn
+
+class Test_Storage:
+    def setUp(self):
+        self.storage = getUtility(IStorage,name="vechicle")
+
+    def test_conn(self):
+        assert self.storage is not None
+
+    def test_create_database(self):
+        cur=self.storage.conn.cursor()
+        cur.execute("""
+            create table test (
+                id integer,
+                name varchar(100),
+                pass text);
+            """);
+    def test_drop_db(self):
+        cur=self.storage.conn.cursor()
+        cur.execute("""
+            drop table test;
+            """)
+

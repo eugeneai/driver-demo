@@ -31,3 +31,9 @@ class IVehicle(Interface):
         """
         Register auto to owner with number.
         """
+
+class IStorage(Interface):
+    """
+    Interface defining services, which allows one to
+    store objects.
+    """
