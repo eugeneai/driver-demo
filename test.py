@@ -1,4 +1,5 @@
 #!/bin/env python
+# encoding: utf-8
 
 # http://www.ccs.neu.edu/home/matthias/HtDP2e/
 # How to design programs.
@@ -15,7 +16,7 @@
 # http://umlet.org
 #
 
-
+print ("Прювет Волку!")
 print ("Ok")
 
 def fact(x):
@@ -203,7 +204,8 @@ if True:
                 yield t+[i]
 
     def tickets():
-        yield from ticket(6)
+        for t in ticket(6):
+            yield t
 
     def lucky():
         for t in tickets():
