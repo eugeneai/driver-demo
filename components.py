@@ -11,8 +11,7 @@ class Driver(object):
     def __init__(self, name, familyname):
         self.name=name
         self.familyname=familyname
-        self.cars=[]
-        self.motobikes=[]
+        self.vechicles=[]
 
     def fio(self):
         """
@@ -20,21 +19,13 @@ class Driver(object):
         """
         return "{} {}".format(self.name, self.familyname)
 
-    def add_car(self, car):
-        assert IVehicle.providedBy(car)
-        self.cars.append(car)
+    def add(self, vechicle):
+        assert IVehicle.providedBy(vechicle)
+        self.vechicles.append(vechicle)
 
-    def remove_car(self, car):
-        assert IVehicle.providedBy(car)
-        self.cars.remove(car)
-        
-    def add_motobike(self, motobike):
-        assert IVehicle.providedBy(motobike)
-        self.motobikes.append(motobike)
-
-    def remove_motobike(self, motobike):
-        assert IVehicle.providedBy(motobike)
-        self.motobikes.remove(motobike)
+    def remove(self, vechicle):
+        assert IVehicle.providedBy(vechicle)
+        self.vechicles.remove(vechicle)
 
 @implementer(IVehicle)
 class Car(object):
@@ -47,14 +38,14 @@ class Car(object):
             raise ValueError("has owner")
         self.owner = owner
         self.number = number
-        owner.add_car(self)
+        owner.add(self)
 
     def unregister(self):
-        self.owner.remove_car(self)
+        self.owner.remove(self)
         self.owner=None
         self.number=None
-        
-@implementer(IVehicle)        
+
+@implementer(IVehicle)
 class Motobike(object):
     def __init__(self, name):
         self.name = name
@@ -65,9 +56,9 @@ class Motobike(object):
             raise ValueError("has owner")
         self.owner = owner
         self.number = number
-        owner.add_motobike(self)
+        owner.add(self)
 
     def unregister(self):
-        self.owner.remove_motobike(self)
+        self.owner.remove(self)
         self.owner=None
         self.number=None

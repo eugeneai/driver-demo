@@ -1,3 +1,4 @@
+# encoding: utf-8
 from components import Driver, Car, Motobike
 from interfaces import IDriver, IVehicle
 from zope.component import implementedBy
@@ -27,7 +28,7 @@ class Test_Car:
 
     def test_car(self):
         IVehicle.providedBy(self.car)
-        
+
 class Test_Motobike:
     def setUp(self):
         self.motobike=Motobike("Honda R1")
@@ -50,7 +51,7 @@ class Test_driver:
         d = self.driver
         assert d.name == "John"
         assert d.familyname == "Doe"
-        assert len(d.cars) == 0
+        assert len(d.vechicles) == 0
 
     def test_fio(self):
         d = self.driver
@@ -61,23 +62,23 @@ class Test_driver:
         car1 = Car("Toyota Rav IV")
         NUMBER = "y-666-kx-138-rus"
         car1.register(john, NUMBER)
-        assert len(john.cars) == 1
+        assert len(john.vechicles) == 1
         assert car1.owner == john
         assert car1.number == NUMBER
         car1.unregister()
-        assert len(john.cars) == 0
+        assert len(john.vechicles) == 0
         assert car1.owner == None
         assert car1.number == None
-        
+
     def test_add_and_remove_motobike(self):
         john = self.driver
-        moto = ("BMW 1000")
+        moto = Motobike("BMW 1000")
         NUMBER = "x-666-xx-138-rus"
         moto.register(john, NUMBER)
-        assert len(john.motobikes) == 1
+        assert len(john.vechicles) == 1
         assert moto.owner == john
         assert moto.number == NUMBER
         moto.unregister()
-        assert len(john.moto) == 0
+        assert len(john.vechicles) == 0
         assert moto.owner == None
         assert moto.number == None
